@@ -14,7 +14,7 @@ def main():
     AccessToken = 'yGNCqYxnD6QAAAAAAAAAAQxm9ZwFySM4SnlKYaE4_qW4v2TCtO3OibEsfmEZdWjR'
     transferData= TransferData(AccessToken)
 
-    file_from = input("Please ente the file location\n")
+    file_from = input("Please enter the file location\n")
     file_to = input("\nPlease enter dropbox file location\n")
 
 
