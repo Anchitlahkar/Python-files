@@ -5,7 +5,7 @@ import numpy as np
 
 
 data = csv.reader(open(
-    "D:\Apps\Python\Correlation\Correlation-data-files\cups of coffee vs hours of sleep.csv"))
+    "Correlation-data-files\cups of coffee vs hours of sleep.csv"))
 
 listData = list(data)
 listData.pop(0)

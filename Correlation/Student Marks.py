@@ -5,7 +5,7 @@ import numpy as np
 
 
 data = csv.reader(open(
-    "D:\Apps\Python\Correlation\Correlation-data-files\Student Marks vs Days Present.csv"))
+    "Correlation-data-files\Student Marks vs Days Present.csv"))
 
 listData = list(data)
 listData.pop(0)
