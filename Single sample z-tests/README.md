@@ -1,0 +1,1 @@
+z_Score = (New Sample Mean - Sampling Distribution Mean) / standard deviation
