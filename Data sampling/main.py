@@ -1,37 +1,37 @@
-import pandas as pd
-import plotly.figure_factory as ff
-import statistics as st
 import random
 
-df = pd.read_csv("data.csv")
-
-data = df["temp"].tolist()
-
-mean = st.mean(data)
-Std = st.stdev(data)
-
-print(' Mean: ', mean, '\n', 'Std: ', Std)
-
-meanData = []
+quant_saved_mean_Data = []
+highschool_completed_data = []
 
 for a in range(0, 1000):
-    spData = []
+    sp_quant_saved_Data = []
+    sp_highschool_completed_data = []
 
     for i in range(0, 500):
-        randomIndex = random.randint(0, len(data)-1)
-        value = data[randomIndex]
+        randomIndex_quant_saved = random.randint(0, len(quant_saved)-1)
+        value_quant_saved = quant_saved[randomIndex_quant_saved]
 
-        spData.append(value)
+        sp_quant_saved_Data.append(value_quant_saved)
 
-    spDataMean = st.mean(spData)
-    meanData.append(spDataMean)           
+        randomIndex_highschool_completed = random.randint(0, len(highschool_completed)-1)
+        value_highschool_completed = highschool_completed[randomIndex_highschool_completed]
+
+        sp_highschool_completed_data.append(value_highschool_completed)
+
+    sp_quant_saved_Data_Mean = st.mean(sp_quant_saved_Data)
+    quant_saved_mean_Data.append(sp_quant_saved_Data_Mean)
+
+    sp_highschool_completed_data_mean = st.mean(sp_highschool_completed_data)
+    highschool_completed_data.append(sp_highschool_completed_data_mean)
 
 
-meanOfMeanData = st.mean(meanData)
-stdOfMeanData = st.stdev(meanData)     # standered error of the mean/ sampling error
+mean_quant_saved = st.mean(quant_saved_mean_Data)
+median_quant_saved = st.median(quant_saved_mean_Data)
+mode_quant_saved = st.mode(quant_saved_mean_Data)
 
-print("\n Mean: ", meanOfMeanData)
-print("\n STD : ", stdOfMeanData)
+highschool_completed_mean = st.mean(highschool_completed_data)
+highschool_completed_median = st.median(highschool_completed_data)
+highschool_completed_mode = st.mode(highschool_completed_data)
 
-# graph = ff.create_distplot([meanData], ["Temp"], show_hist=False)
-# graph.show()
+print('Sp Quant Saved Mean: ',mean_quant_saved)
+print('Sp Highschool Completed Mean: ',highschool_completed_mean)
