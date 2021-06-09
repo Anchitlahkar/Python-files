@@ -3,7 +3,6 @@ import plotly_express as px
 import csv
 import numpy as np
 
-
 data = csv.reader(open(
     "D:\Apps\Python\Correlation\Correlation-data-files\Size of TV,_Average time spent watching TV in a week (hours).csv"))
 
