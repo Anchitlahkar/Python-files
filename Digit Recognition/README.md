@@ -1,0 +1,1 @@
+Here we'll use the try except block as try block lets us test the code for errors and except block lets us handle the errors. The try except block has 2 blocks. 1st try where you write the code which you want to execute. 2nd except block which catches the errors from the try block .
