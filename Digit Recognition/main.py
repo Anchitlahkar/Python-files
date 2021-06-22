@@ -51,4 +51,60 @@ while True:
 
         # converting the frame into grey color
         grey = cv2.cvtColor(frm, cv2.COLOR_BGR2GRAY)
-         
+
+        # Drawing a box in the center of the Video
+        height, width = grey.shape
+
+        upper_left = (int(width/2-56), int(height/2-56))
+        bottom_right = (int(width/2+56), int(height/2+56))
+
+        cv2.rectangle(grey, upper_left, bottom_right, (0,255,0), 2)
+
+
+        # to only consider the area inside the box for detecting the digit           roi(region of interest)
+        roi = grey[upper_left[1]:bottom_right[1], upper_left[0]: bottom_right[0]]
+
+        print('2st Part')
+        
+        # converting cv2 img to PIL(Python Image Lib)
+        img_pil = Image.fromarray(roi)
+
+        img_bw = img_pil.convert('L')
+
+        img_resized = img_bw.resize((28,28), Image.ANTIALIAS)
+
+        # import the img
+        img_inverted = PIL.ImageOps.invert(img_resized)
+
+        pixel_filter = 20
+
+        print('3st Part')
+
+        # converting to scaler quantity
+        min_pixel = np.percentile(img_inverted, pixel_filter)
+        img_scaled = np.clip(img_inverted - min_pixel, 0, 255)
+        max_pixel = np.max(img_inverted)
+
+        # converting into an array
+        img_final = np.asarray(img_scaled)/max_pixel
+
+        # create a test sample and make a prediction
+        test_sample = np.array(img_scaled).reshape(1, 784)
+
+        test_prediction = classifier.predict(test_sample)
+
+        print('Prediction: ',test_prediction)
+
+        cv2.imshow('Frame', grey)
+
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+
+    
+    except Exception as e:
+        pass
+
+capture.release()
+cv2.destroyAllWindows()
