@@ -1,9 +1,6 @@
 import cv2
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-from pandas.core import frame
-import seaborn as sns
 from sklearn.datasets import fetch_openml
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -64,7 +61,7 @@ while True:
         # to only consider the area inside the box for detecting the digit           roi(region of interest)
         roi = grey[upper_left[1]:bottom_right[1], upper_left[0]: bottom_right[0]]
 
-        print('2st Part')
+
         
         # converting cv2 img to PIL(Python Image Lib)
         img_pil = Image.fromarray(roi)
@@ -78,7 +75,6 @@ while True:
 
         pixel_filter = 20
 
-        print('3st Part')
 
         # converting to scaler quantity
         min_pixel = np.percentile(img_inverted, pixel_filter)
@@ -92,7 +88,6 @@ while True:
         test_sample = np.array(img_scaled).reshape(1, 784)
 
         test_prediction = classifier.predict(test_sample)
-
         print('Prediction: ',test_prediction)
 
         cv2.imshow('Frame', grey)
@@ -102,8 +97,7 @@ while True:
             break
 
 
-    
-    except Exception as e:
+    except:
         pass
 
 capture.release()
