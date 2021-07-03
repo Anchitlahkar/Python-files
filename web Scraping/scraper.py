@@ -15,7 +15,7 @@ def scrape():
                "STELLAR MAGNITUDE", "DISCOVERY DATE"]
     planet_data = []
 
-    for i in range(0, 428):
+    for i in range(1, 444):
         Soup = BeautifulSoup(browser.page_source, "html.parser")
 
         for ul_tag in Soup.find_all("ul", attrs={"class", "exoplanet"}):
@@ -37,9 +37,9 @@ def scrape():
         
         browser.find_element_by_xpath('//*[@id="primary_column"]/footer/div/div/div/nav/span[2]/a').click()
     
-    with open("planetData.csv", "w") as f:
+    with open("planetData.csv", "w", newline='') as f:
         csv_Writter = csv.writer(f)
         csv_Writter.writerow(headers)
-        csv_Writter.writerow(planet_data)
+        csv_Writter.writerows(planet_data)
     
 scrape()
