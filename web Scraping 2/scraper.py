@@ -74,7 +74,7 @@ def scrape_more_data(hyperlink):
 
 scrape()
 
-for index,data in enumerate(planet_data):
+for index, data in enumerate(planet_data):
     scrape_more_data(data[5])
     print(f"scraping more data {index}")
 
