@@ -7,7 +7,7 @@ not_liked_movies = []
 not_watched_movies = []
 
 
-with open('Movies.csv', encoding='utf-8') as f:
+with open('final.csv', encoding='utf-8') as f:
     csv_reader = csv.reader(f)
 
     data = list(csv_reader)
@@ -45,7 +45,7 @@ def like_movie():
 
 # not-liked-movies
 @app.route('/not-liked-movies', methods=['POST'])
-def like_movie():
+def not_like_movie():
     global all_movies
 
     movie = all_movies[0]
@@ -60,7 +60,7 @@ def like_movie():
 
 # did-not-watch-movies
 @app.route('/did-not-watch-movies', methods=['POST'])
-def like_movie():
+def did_not_watch_movie():
     global all_movies
 
     movie = all_movies[0]
