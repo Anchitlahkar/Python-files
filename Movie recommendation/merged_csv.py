@@ -1,7 +1,7 @@
 import csv
 
 all_movies = []
-with open('CSV\Movies.csv', encoding='utf-8') as f:
+with open('CSV/Movies.csv', encoding='utf-8') as f:
     csv_reader = csv.reader(f)
 
     data = list(csv_reader)
