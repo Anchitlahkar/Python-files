@@ -10,7 +10,7 @@ with open('CSV/Movies.csv', encoding='utf-8') as f:
 
 headers.append('Poster_link')
 
-with open('final.csv', 'a+', encoding='utf-8') as f:
+with open('final.csv', 'a+', encoding='utf-8', newline='') as f:
     csv_writer = csv.writer(f)
 
     csv_writer.writerow(headers)
@@ -30,7 +30,7 @@ for movie_item in all_movies:
             if movie_item[9] == movie_link_items[0]:
                 movie_item.append(movie_link_items[1])
                 if len(movie_item) == 29:
-                    with open('final.csv', 'a+', encoding='utf-8') as f:
+                    with open('final.csv', 'a+', encoding='utf-8', newline='') as f:
                         csv_writer = csv.writer(f)
                         csv_writer.writerow(movie_item)
                         print(f'movie append {movie_item[0]}: {movie_item[9]}')
