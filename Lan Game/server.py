@@ -1,5 +1,3 @@
-
-from multiprocessing.connection import Client
 import socket
 from threading import Thread
 
@@ -31,6 +29,33 @@ def acceptConnections():
         CLIENTS[player_name]["turn"] = False
 
         print(f"Connection established with {player_name} : {addr}")
+
+
+def handleClient(player_socket, player_name):
+    global CLIENTS
+
+    playerType = CLIENTS[player_name]["player_type"]
+
+    if(playerType == 'player1'):
+        CLIENTS[player_name]['turn'] = True
+        player_socket.send(str({'player_type': CLIENTS[player_name]["player_type"],
+                           'turn': CLIENTS[player_name]['turn'], 'player_name': player_name}).encode())
+    else:
+        CLIENTS[player_name]['turn'] = False
+        player_socket.send(str({'player_type': CLIENTS[player_name]["player_type"],
+                           'turn': CLIENTS[player_name]['turn'], 'player_name': player_name}).encode())
+
+
+    while True:
+        try:
+            message = player_socket.recv(2048)
+            if(message):
+                for cName in CLIENTS:
+                    cSocket = CLIENTS[cName]["player_socket"]
+                    cSocket.send(message)
+        except:
+            pass
+
 
 
 def setup():
