@@ -69,6 +69,10 @@ def askPlayerName():
 
 def gameWindow():
     global gameWindow, canvas2, screen_height, screen_width, dice, rollButton
+    global playerTurn
+    global playerType
+    global playerName
+
 
     gameWindow = Tk()
     gameWindow.title("Ludo Ladder")
@@ -99,13 +103,10 @@ def gameWindow():
     rollButton = Button(gameWindow, text="Roll Dice", fg="black", font=(
         "Chalkboard SE", 15), bg="grey", command=rollDice, width=20, height=5)
 
-    global playerTurn
-    global playerType
-    global playerName
+    print(playerType)
 
-
-    if(playerType == 'player1' and playerTurn):
-        rollButton.place(x=screen_width / 2 - 80, y=screen_height/2  + 250)
+    if(playerType == None):
+        rollButton.place(x=screen_width / 2 - 80, y=screen_height/2 + 250)
     else:
         rollButton.pack_forget()
 

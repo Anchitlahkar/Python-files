@@ -69,6 +69,9 @@ def acceptConnections():
 
 
 
+
+
+
 def setup():
     print("\n")
     print("\t\t\t\t\t\t*** LUDO LADDER ***")

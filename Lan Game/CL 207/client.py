@@ -1,7 +1,7 @@
-#-------------Boilerplate Code Start-----
+# -------------Boilerplate Code Start-----
 import socket
 from tkinter import *
-from  threading import Thread
+from threading import Thread
 import random
 from PIL import ImageTk, Image
 
@@ -45,7 +45,7 @@ winingMessage = None
 
 winingFunctionCall = 0
 
-#-------------Boilerplate Code End-----
+# -------------Boilerplate Code End-----
 
 
 # Boilerplate Code
@@ -57,10 +57,12 @@ def checkColorPosition(boxes, color):
     return False
 
 # Teacher Activity
+
+
 def movePlayer1(steps):
     global leftBoxes
 
-    boxPosition = checkColorPosition(leftBoxes[1:],"red")
+    boxPosition = checkColorPosition(leftBoxes[1:], "red")
 
     if(boxPosition):
         diceValue = steps
@@ -86,7 +88,7 @@ def movePlayer1(steps):
             for box in leftBoxes[1:]:
                 box.configure(bg='white')
 
-            nextStep = (coloredBoxIndex + 1 ) + diceValue
+            nextStep = (coloredBoxIndex + 1) + diceValue
             leftBoxes[nextStep].configure(bg='red')
         else:
             print("Move False")
@@ -102,7 +104,7 @@ def movePlayer2(steps):
     # Moving to reverse order
     tempBoxes = rightBoxes[-2::-1]
 
-    boxPosition = checkColorPosition(tempBoxes,"yellow")
+    boxPosition = checkColorPosition(tempBoxes, "yellow")
 
     if(boxPosition):
         diceValue = steps
@@ -128,7 +130,7 @@ def movePlayer2(steps):
             for box in rightBoxes[-2::-1]:
                 box.configure(bg='white')
 
-            nextStep = (coloredBoxIndex + 1 ) + diceValue
+            nextStep = (coloredBoxIndex + 1) + diceValue
             rightBoxes[::-1][nextStep].configure(bg='yellow')
         else:
             print("Move False")
@@ -137,14 +139,13 @@ def movePlayer2(steps):
         rightBoxes[len(rightBoxes) - (steps+1)].configure(bg='yellow')
 
 
-
 def rollDice():
     global SERVER
-    #create a number variable in which the list of all the ASCII characters of the string will be stored
-    #Use backslash because unicode must have a backslash
-    diceChoices=['\u2680','\u2681','\u2682','\u2683','\u2684','\u2685']
+    # create a number variable in which the list of all the ASCII characters of the string will be stored
+    # Use backslash because unicode must have a backslash
+    diceChoices = ['\u2680', '\u2681', '\u2682', '\u2683', '\u2684', '\u2685']
 
-    #configure the label
+    # configure the label
     value = random.choice(diceChoices)
 
     global playerType
@@ -161,26 +162,25 @@ def rollDice():
         SERVER.send(f'{value}player1Turn'.encode())
 
 
-
-
-
 def leftBoard():
     global gameWindow
     global leftBoxes
     global screen_height
 
     xPos = 30
-    for box in range(0,11):
+    for box in range(0, 11):
         if(box == 0):
-            boxLabel = Label(gameWindow, font=("Helvetica",30), width=2, height=1, relief='ridge', borderwidth=0, bg="red")
+            boxLabel = Label(gameWindow, font=(
+                "Helvetica", 30), width=2, height=1, relief='ridge', borderwidth=0, bg="red")
             boxLabel.place(x=xPos, y=screen_height/2 - 88)
             leftBoxes.append(boxLabel)
-            xPos +=50
+            xPos += 50
         else:
-            boxLabel = Label(gameWindow, font=("Helvetica",55), width=2, height=1, relief='ridge', borderwidth=0, bg="white")
-            boxLabel.place(x=xPos, y=screen_height/2- 100)
+            boxLabel = Label(gameWindow, font=(
+                "Helvetica", 55), width=2, height=1, relief='ridge', borderwidth=0, bg="white")
+            boxLabel.place(x=xPos, y=screen_height/2 - 100)
             leftBoxes.append(boxLabel)
-            xPos +=75
+            xPos += 75
 
 
 def rightBoard():
@@ -189,17 +189,19 @@ def rightBoard():
     global screen_height
 
     xPos = 988
-    for box in range(0,11):
+    for box in range(0, 11):
         if(box == 10):
-            boxLabel = Label(gameWindow, font=("Helvetica",30), width=2, height=1, relief='ridge', borderwidth=0, bg="yellow")
+            boxLabel = Label(gameWindow, font=(
+                "Helvetica", 30), width=2, height=1, relief='ridge', borderwidth=0, bg="yellow")
             boxLabel.place(x=xPos, y=screen_height/2-88)
             rightBoxes.append(boxLabel)
-            xPos +=50
+            xPos += 50
         else:
-            boxLabel = Label(gameWindow, font=("Helvetica",55), width=2, height=1, relief='ridge', borderwidth=0, bg="white")
+            boxLabel = Label(gameWindow, font=(
+                "Helvetica", 55), width=2, height=1, relief='ridge', borderwidth=0, bg="white")
             boxLabel.place(x=xPos, y=screen_height/2 - 100)
             rightBoxes.append(boxLabel)
-            xPos +=75
+            xPos += 75
 
 
 def finishingBox():
@@ -208,9 +210,9 @@ def finishingBox():
     global screen_width
     global screen_height
 
-    finishingBox = Label(gameWindow, text="Home", font=("Chalkboard SE", 32), width=8, height=4, borderwidth=0, bg="green", fg="white")
-    finishingBox.place(x=screen_width/2 - 68, y=screen_height/2 -160)
-
+    finishingBox = Label(gameWindow, text="Home", font=(
+        "Chalkboard SE", 32), width=8, height=4, borderwidth=0, bg="green", fg="white")
+    finishingBox.place(x=screen_width/2 - 68, y=screen_height/2 - 160)
 
 
 def gameWindow():
@@ -222,33 +224,32 @@ def gameWindow():
     global winingMessage
     global resetButton
 
-
     gameWindow = Tk()
     gameWindow.title("Ludo Ladder")
-    gameWindow.attributes('-fullscreen',True)
+    gameWindow.attributes('-fullscreen', True)
 
     screen_width = gameWindow.winfo_screenwidth()
     screen_height = gameWindow.winfo_screenheight()
 
-    bg = ImageTk.PhotoImage(file = "./assets/background.png")
+    bg = ImageTk.PhotoImage(file="./assets/background.png")
 
-    canvas2 = Canvas( gameWindow, width = 500,height = 500)
-    canvas2.pack(fill = "both", expand = True)
+    canvas2 = Canvas(gameWindow, width=500, height=500)
+    canvas2.pack(fill="both", expand=True)
 
     # Display image
-    canvas2.create_image( 0, 0, image = bg, anchor = "nw")
+    canvas2.create_image(0, 0, image=bg, anchor="nw")
 
     # Add Text
-    canvas2.create_text( screen_width/2, screen_height/5, text = "Ludo Ladder", font=("Chalkboard SE",100), fill="white")
-
+    canvas2.create_text(screen_width/2, screen_height/5,
+                        text="Ludo Ladder", font=("Chalkboard SE", 100), fill="white")
 
     # Declaring Wining Message
-    winingMessage = canvas2.create_text(screen_width/2 + 10, screen_height/2 + 250, text = "", font=("Chalkboard SE",100), fill='#fff176')
+    winingMessage = canvas2.create_text(
+        screen_width/2 + 10, screen_height/2 + 250, text="", font=("Chalkboard SE", 100), fill='#fff176')
 
     # Creating Reset Button
-    resetButton =  Button(gameWindow,text="Reset Game", fg='black', font=("Chalkboard SE", 15), bg="grey",command=restGame, width=20, height=5)
-
-
+    resetButton = Button(gameWindow, text="Reset Game", fg='black', font=(
+        "Chalkboard SE", 15), bg="grey", command=restGame, width=20, height=5)
 
     leftBoard()
     rightBoard()
@@ -256,7 +257,8 @@ def gameWindow():
 
     global rollButton
 
-    rollButton = Button(gameWindow,text="Roll Dice", fg='black', font=("Chalkboard SE", 15), bg="grey",command=rollDice, width=20, height=5)
+    rollButton = Button(gameWindow, text="Roll Dice", fg='black', font=(
+        "Chalkboard SE", 15), bg="grey", command=rollDice, width=20, height=5)
 
     global playerTurn
     global playerType
@@ -271,28 +273,29 @@ def gameWindow():
     global player1ScoreLabel
     global player2ScoreLabel
 
-
-
     if(playerType == 'player1' and playerTurn):
-        rollButton.place(x=screen_width / 2 - 80, y=screen_height/2  + 250)
+        rollButton.place(x=screen_width / 2 - 80, y=screen_height/2 + 250)
     else:
         rollButton.pack_forget()
 
     # Creating Dice with value 1
-    dice = canvas2.create_text(screen_width/2 + 10, screen_height/2 + 100, text = "\u2680", font=("Chalkboard SE",250), fill="white")
+    dice = canvas2.create_text(screen_width/2 + 10, screen_height/2 +
+                               100, text="\u2680", font=("Chalkboard SE", 250), fill="white")
 
     # Creating name board
-    player1Label = canvas2.create_text(400,  screen_height/2 + 100, text = player1Name, font=("Chalkboard SE",80), fill='#fff176' )
-    player2Label = canvas2.create_text(screen_width - 300, screen_height/2 + 100, text = player2Name, font=("Chalkboard SE",80), fill='#fff176' )
+    player1Label = canvas2.create_text(
+        400,  screen_height/2 + 100, text=player1Name, font=("Chalkboard SE", 80), fill='#fff176')
+    player2Label = canvas2.create_text(
+        screen_width - 300, screen_height/2 + 100, text=player2Name, font=("Chalkboard SE", 80), fill='#fff176')
 
     # Creating Score Board
-    player1ScoreLabel = canvas2.create_text(400,  screen_height/2 - 160, text = player1Score, font=("Chalkboard SE",80), fill='#fff176' )
-    player2ScoreLabel = canvas2.create_text(screen_width - 300, screen_height/2 - 160, text = player2Score, font=("Chalkboard SE",80), fill='#fff176' )
-
+    player1ScoreLabel = canvas2.create_text(
+        400,  screen_height/2 - 160, text=player1Score, font=("Chalkboard SE", 80), fill='#fff176')
+    player2ScoreLabel = canvas2.create_text(
+        screen_width - 300, screen_height/2 - 160, text=player2Score, font=("Chalkboard SE", 80), fill='#fff176')
 
     gameWindow.resizable(True, True)
     gameWindow.mainloop()
-
 
 
 def saveName():
@@ -310,48 +313,44 @@ def saveName():
     gameWindow()
 
 
-
 def askPlayerName():
     global playerName
     global nameEntry
     global nameWindow
     global canvas1
 
-    nameWindow  = Tk()
+    nameWindow = Tk()
     nameWindow.title("Ludo Ladder")
-    nameWindow.attributes('-fullscreen',True)
-
+    nameWindow.attributes('-fullscreen', True)
 
     screen_width = nameWindow.winfo_screenwidth()
     screen_height = nameWindow.winfo_screenheight()
 
-    bg = ImageTk.PhotoImage(file = "./assets/background.png")
+    bg = ImageTk.PhotoImage(file="./assets/background.png")
 
-    canvas1 = Canvas( nameWindow, width = 500,height = 500)
-    canvas1.pack(fill = "both", expand = True)
+    canvas1 = Canvas(nameWindow, width=500, height=500)
+    canvas1.pack(fill="both", expand=True)
     # Display image
-    canvas1.create_image( 0, 0, image = bg, anchor = "nw")
-    canvas1.create_text( screen_width/2, screen_height/5, text = "Enter Name", font=("Chalkboard SE",100), fill="white")
+    canvas1.create_image(0, 0, image=bg, anchor="nw")
+    canvas1.create_text(screen_width/2, screen_height/5,
+                        text="Enter Name", font=("Chalkboard SE", 100), fill="white")
 
-    nameEntry = Entry(nameWindow, width=15, justify='center', font=('Chalkboard SE', 50), bd=5, bg='white')
-    nameEntry.place(x = screen_width/2 - 220, y=screen_height/4 + 100)
+    nameEntry = Entry(nameWindow, width=15, justify='center',
+                      font=('Chalkboard SE', 50), bd=5, bg='white')
+    nameEntry.place(x=screen_width/2 - 220, y=screen_height/4 + 100)
 
-
-    button = Button(nameWindow, text="Save", font=("Chalkboard SE", 30),width=15, command=saveName, height=2, bg="#80deea", bd=3)
-    button.place(x = screen_width/2 - 130, y=screen_height/2 - 30)
+    button = Button(nameWindow, text="Save", font=(
+        "Chalkboard SE", 30), width=15, command=saveName, height=2, bg="#80deea", bd=3)
+    button.place(x=screen_width/2 - 130, y=screen_height/2 - 30)
 
     nameWindow.resizable(True, True)
     nameWindow.mainloop()
 
 
-#--------- Boilerplate Code Start---------------
+# --------- Boilerplate Code Start---------------
 def restGame():
     global SERVER
     SERVER.send("reset game".encode())
-
-
-
-    
 
 
 def handleResetGame():
@@ -375,8 +374,9 @@ def handleResetGame():
     # Handling Reset Game
     if(playerType == 'player1'):
         # Creating roll dice button
-        rollButton = Button(gameWindow,text="Roll Dice", fg='black', font=("Chalkboard SE", 15), bg="grey",command=rollDice, width=20, height=5)
-        rollButton.place(x=screen_width / 2 - 80, y=screen_height/2  + 250)
+        rollButton = Button(gameWindow, text="Roll Dice", fg='black', font=(
+            "Chalkboard SE", 15), bg="grey", command=rollDice, width=20, height=5)
+        rollButton.place(x=screen_width / 2 - 80, y=screen_height/2 + 250)
         playerTurn = True
 
     if(playerType == 'player2'):
@@ -385,24 +385,112 @@ def handleResetGame():
     for rBox in rightBoxes[-2::-1]:
         rBox.configure(bg='white')
 
-    for lBox  in leftBoxes[1:]:
+    for lBox in leftBoxes[1:]:
         lBox.configure(bg='white')
-
 
     finishingBox.configure(bg='green')
     canvas2.itemconfigure(winingMessage, text="")
     resetButton.destroy()
 
     # Again Recreating Reset Button for next game
-    resetButton =  Button(gameWindow,text="Reset Game", fg='black', font=("Chalkboard SE", 15), bg="grey",command=restGame, width=20, height=5)
+    resetButton = Button(gameWindow, text="Reset Game", fg='black', font=(
+        "Chalkboard SE", 15), bg="grey", command=restGame, width=20, height=5)
     winingFunctionCall = 0
-#----------------- Boilerplate Code End ---------------
+# ----------------- Boilerplate Code End ---------------
 
 
 def recivedMsg():
-    pass
+    global SERVER, playerType, playerTurn, rollButton, screen_height
+    global screen_width, canvas2, dice, gameWindow, player1Name, player2Name, player1Label, player2Label, winingFunctionCall
+
+    while True:
+        msg = SERVER.recv(2048).decode()
+
+        if "player_type" in msg:
+            recv_msg = eval(msg)
+            playerType = recv_msg["player_type"]
+            playerTurn = recv_msg["turn"]
+
+        elif "player_name" in msg:
+            players = eval(msg)
+            players = players["player_name"]
+
+            for p in players:
+                if(p['type'] == 'player1'):
+                    player1Name = p['name']
+
+                elif(p['type'] == 'player2'):
+                    player2Name = p['name']
+
+        elif('⚀' in msg):
+            # Dice with value 1
+            canvas2.itemconfigure(dice, text='\u2680')
+
+        elif('⚁' in msg):
+            # Dice with value 2
+            canvas2.itemconfigure(dice, text='\u2681')
+
+        elif('⚂' in msg):
+            # Dice with value 3
+            canvas2.itemconfigure(dice, text='\u2682')
+
+        elif('⚃' in msg):
+            # Dice with value 4
+            canvas2.itemconfigure(dice, text='\u2683')
+
+        elif('⚄' in msg):
+            # Dice with value 5
+            canvas2.itemconfigure(dice, text='\u2684')
+
+        elif('⚅' in msg):
+            # Dice with value 6
+            canvas2.itemconfigure(dice, text='\u2685')
+
+        elif('wins the game.' in msg and winingFunctionCall == 0):
+            winingFunctionCall += 1
+            handleWin(msg)
+
+        if('player1Turn' in msg or 'player2Turn' in msg):
+            diceChoices = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅']
+            diceValue = diceChoices.index(msg[0]) + 1
+
+            if('player2Turn' in msg):
+                movePlayer1(diceValue)
+
+            if('player1Turn' in msg):
+                movePlayer2(diceValue)
+
+        # creating rollbutton
+        if('player1Turn' in msg and playerType == 'player1'):
+            playerTurn = True
+            rollButton = Button(gameWindow, text="Roll Dice", fg='black', font=(
+                "Chalkboard SE", 15), bg="grey", command=rollDice, width=20, height=5)
+            rollButton.place(x=screen_width / 2 - 80, y=screen_height/2 + 250)
+
+        elif('player2Turn' in msg and playerType == 'player2'):
+            playerTurn = True
+            rollButton = Button(gameWindow, text="Roll Dice", fg='black', font=(
+                "Chalkboard SE", 15), bg="grey", command=rollDice, width=20, height=5)
+            rollButton.place(x=screen_width / 2 - 80, y=screen_height/2 + 260)
 
 
+def handleWin(msg):
+    global playerType, rollButton, canvas2, winingMessage, screen_width, screen_height, resetButton
+
+    if "Red" in msg:
+        if playerType == "player2":
+            rollButton.destroy()
+
+    if "Yellow" in msg:
+        if playerType == "player1":
+            rollButton.destroy()
+
+    # Adding Wining Message
+    message = msg.split(".")[0] + "."
+    canvas2.itemconfigure(winingMessage, text=message)
+
+    # Placing Reset Button
+    resetButton.place(x=screen_width / 2 - 80, y=screen_height - 220)
 
 
 def setup():
@@ -410,7 +498,7 @@ def setup():
     global PORT
     global IP_ADDRESS
 
-    PORT  = 8000
+    PORT = 8000
     IP_ADDRESS = '127.0.0.1'
 
     SERVER = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -420,8 +508,6 @@ def setup():
     thread.start()
 
     askPlayerName()
-
-
 
 
 setup()

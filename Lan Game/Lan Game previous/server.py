@@ -18,10 +18,10 @@ def acceptConnections():
         player_name = player_socket.recv(1024).decode().strip()
 
         if len(CLIENTS.keys()) == 0:
-            CLIENTS[player_name] = {'player_type': 'player1'}
+            CLIENTS[player_name] = {'player_type': f'player{len(CLIENTS.keys())+1}'}
 
         else:
-            CLIENTS[player_name] = {'player_type': 'player2'}
+            CLIENTS[player_name] = {'player_type': f'player{len(CLIENTS.keys())+1}' }
 
         CLIENTS[player_name]["player_socket"] = player_socket
         CLIENTS[player_name]["address"] = addr
@@ -30,11 +30,17 @@ def acceptConnections():
 
         print(f"Connection established with {player_name} : {addr}")
 
+        thread = Thread(target=handleClient, args=(
+            player_socket, player_name,))
+        thread.start()
+
 
 def handleClient(player_socket, player_name):
     global CLIENTS
 
     playerType = CLIENTS[player_name]["player_type"]
+
+    print(CLIENTS[player_name]['player_type'])
 
     if(playerType == 'player1'):
         CLIENTS[player_name]['turn'] = True
@@ -45,7 +51,6 @@ def handleClient(player_socket, player_name):
         player_socket.send(str({'player_type': CLIENTS[player_name]["player_type"],
                            'turn': CLIENTS[player_name]['turn'], 'player_name': player_name}).encode())
 
-
     while True:
         try:
             message = player_socket.recv(2048)
@@ -55,7 +60,6 @@ def handleClient(player_socket, player_name):
                     cSocket.send(message)
         except:
             pass
-
 
 
 def setup():
