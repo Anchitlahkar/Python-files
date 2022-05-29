@@ -26,8 +26,8 @@ finishingBox = None
 
 playerType = None
 playerTurn = None
-player1Name = 'joining'
-player2Name = 'joining'
+player1Name = ' '
+player2Name = ' '
 player1Label = None
 player2Label = None
 
@@ -405,15 +405,16 @@ def recivedMsg():
 
     while True:
         msg = SERVER.recv(2048).decode()
+        print(msg)
 
         if "player_type" in msg:
             recv_msg = eval(msg)
             playerType = recv_msg["player_type"]
             playerTurn = recv_msg["turn"]
 
-        elif "player_name" in msg:
+        elif "player_names" in msg:
             players = eval(msg)
-            players = players["player_name"]
+            players = players["player_names"]
 
             for p in players:
                 if(p['type'] == 'player1'):
