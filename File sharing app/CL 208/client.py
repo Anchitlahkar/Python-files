@@ -1,5 +1,3 @@
-# -----------Bolierplate Code Start -----
-from cProfile import label
 from lib2to3.pgen2.token import NAME
 import socket
 from threading import Thread
@@ -101,5 +99,3 @@ def setup():
 
 setup()
 
-
-# -----------Bolierplate Code Start -----
