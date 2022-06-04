@@ -1,2 +1,1 @@
-# PRO-207-TA
-teacher activity code
+# CL 207
