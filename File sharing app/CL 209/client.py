@@ -41,6 +41,24 @@ def receiveMessage():
 # Teacher Activity
 
 
+def connectWithClient():
+    global SERVER, listbox
+
+    text = listbox.get(ANCHOR)
+    list_item = text.split(":")
+    msg = "connect " + list_item[1]
+    SERVER.send(msg.encode('ascii'))
+
+
+def disconnectWithClient():
+    global SERVER, listbox
+
+    text = listbox.get(ANCHOR)
+    list_item = text.split(":")
+    msg = "disconnect " + list_item[1]
+    SERVER.send(msg.encode('ascii'))
+
+
 def showClientsList():
     global listbox
 
@@ -101,16 +119,18 @@ def openChatWindow():
     scrollbar1.config(command=listbox.yview)
 
     # Student Activity 1
-    connectButton = Button(window, text="Connect", bd=1, font=("Calibri", 10))
+    connectButton = Button(window, text="Connect", bd=1, font=(
+        "Calibri", 10), command=connectWithClient)
     connectButton.place(x=282, y=160)
 
     # Bolierplate Code
     disconnectButton = Button(
-        window, text="Disconnect", bd=1, font=("Calibri", 10))
+        window, text="Disconnect", bd=1, font=("Calibri", 10), command=disconnectWithClient)
     disconnectButton.place(x=350, y=160)
 
     # Teacher Activity
-    refresh = Button(window, text="Refresh", bd=1, font=("Calibri", 10), command=showClientsList)
+    refresh = Button(window, text="Refresh", bd=1, font=(
+        "Calibri", 10), command=showClientsList)
     refresh.place(x=435, y=160)
 
     labelchat = Label(window, text="Chat Window", font=("Calibri", 10))

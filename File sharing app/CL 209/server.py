@@ -39,6 +39,12 @@ def handleMessges(client, message, client_name):
     if(message == 'show list'):
         handleShowList(client)
 
+    elif(message[:7] == 'connect'):
+        connectClient(message, client, client_name)
+
+    elif(message[:10] == 'disconnect'):
+        disconnectWithClient(message, client, client_name)
+
 
 # Bolierplate Code
 def handleClient(client, client_name):
@@ -63,6 +69,49 @@ def handleClient(client, client_name):
             pass
 
 # Boilerplate Code
+
+
+def connectClient(message, client, client_name):
+    global clients
+
+    entered_client_name = message[8:].strip()
+
+    if(entered_client_name in clients):
+        if(not clients[client_name]["connected_with"]):
+            clients[entered_client_name]["connected_with"] = client_name
+            clients[client_name]["connected_with"] = entered_client_name
+
+            other_client_socket = clients[entered_client_name]["client"]
+
+            greet_message = f"Hello, {entered_client_name} {client_name} connected with you !!!"
+            other_client_socket.send(greet_message.encode())
+
+            msg = f"You are successfully connected with {entered_client_name}"
+            client.send(msg.encode())
+
+        else:
+
+            other_client_name = clients[client_name]["connected_with"]
+            msg = f"You are already connected with {other_client_name}"
+            client.send(msg.encode())
+
+
+def disconnectWithClient(message, client, client_name):
+    global clients
+
+    entered_client_name = message[11:].strip()
+
+    if(entered_client_name in clients):
+        clients[entered_client_name]["connected_with"] = ""
+        clients[client_name]["connected_with"] = ""
+
+        other_client_socket = clients[entered_client_name]["client"]
+
+        greet_message = f"Hello, {entered_client_name} you are successfully disconnected with {client_name} !!!"
+        other_client_socket.send(greet_message.encode())
+
+        msg = f"You are successfully disconnected with {entered_client_name}"
+        client.send(msg.encode())
 
 
 def acceptConnections():
