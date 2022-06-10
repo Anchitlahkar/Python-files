@@ -1,13 +1,13 @@
-#---------- Boilerlate COde start
+# ---------- Boilerlate COde start
 import socket
-from  threading import Thread
+from threading import Thread
 import time
 import os
 
 
-#For FTP Server
+# For FTP Server
 # Student Boilerlate Code Start
-#pip install pyftpdlib < this should be installed
+# pip install pyftpdlib < this should be installed
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
@@ -21,11 +21,13 @@ BUFFER_SIZE = 4096
 clients = {}
 
 
-
-
-
 def sendTextMessage(client_name, message):
-    pass 
+    global clients
+
+    other_client_name = clients[client_name]["connected_with"]
+    other_client_socket = clients[other_client_name]["client"]
+    final_message = client_name + " > " + message
+    other_client_socket.send(final_message.encode())
 
 
 def handleErrorMessage(client):
@@ -41,7 +43,7 @@ def disconnectWithClient(message, client, client_name):
     entered_client_name = message[11:].strip()
     if(entered_client_name in clients):
         clients[entered_client_name]["connected_with"] = ""
-        clients[client_name]["connected_with"]  = ""
+        clients[client_name]["connected_with"] = ""
 
         other_client_socket = clients[entered_client_name]["client"]
 
@@ -52,7 +54,6 @@ def disconnectWithClient(message, client, client_name):
         client.send(msg.encode())
 
 
-
 def handleClientConnection(message, client, client_name):
     global clients
 
@@ -60,7 +61,7 @@ def handleClientConnection(message, client, client_name):
     if(entered_client_name in clients):
         if(not clients[client_name]["connected_with"]):
             clients[entered_client_name]["connected_with"] = client_name
-            clients[client_name]["connected_with"]  = entered_client_name
+            clients[client_name]["connected_with"] = entered_client_name
 
             other_client_socket = clients[entered_client_name]["client"]
 
@@ -80,10 +81,10 @@ def handleShowList(client):
 
     counter = 0
     for c in clients:
-        counter +=1
+        counter += 1
         client_address = clients[c]["address"][0]
         connected_with = clients[c]["connected_with"]
-        message =""
+        message = ""
         if(connected_with):
             message = f"{counter},{c},{client_address}, connected with {connected_with},tiul,\n"
         else:
@@ -100,11 +101,12 @@ def handleMessges(client, message, client_name):
     elif(message[:10] == 'disconnect'):
         disconnectWithClient(message, client, client_name)
     else:
-        pass
-            
-            
-            
-    
+        connected = clients[client_name]["connected_with"]
+        if(connected):
+            sendTextMessage(client_name, message)
+        else:
+            handleErrorMessage(client)
+
 
 def handleClient(client, client_name):
     global clients
@@ -125,6 +127,7 @@ def handleClient(client, client_name):
         except:
             pass
 
+
 def acceptConnections():
     global SERVER
     global clients
@@ -133,17 +136,18 @@ def acceptConnections():
         client, addr = SERVER.accept()
         client_name = client.recv(4096).decode().lower()
         clients[client_name] = {
-                "client"         : client,
-                "address"        : addr,
-                "connected_with" : "",
-                "file_name"      : "",
-                "file_size"      : 4096
-            }
+            "client": client,
+            "address": addr,
+            "connected_with": "",
+            "file_name": "",
+            "file_size": 4096
+        }
 
         print(f"Connection established with {client_name} : {addr}")
 
-        thread = Thread(target = handleClient, args=(client,client_name,))
+        thread = Thread(target=handleClient, args=(client, client_name,))
         thread.start()
+
 
 def setup():
     print("\n\t\t\t\t\t\tIP MESSENGER\n")
@@ -153,8 +157,7 @@ def setup():
     global IP_ADDRESS
     global SERVER
 
-
-    SERVER  = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    SERVER = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     SERVER.bind((IP_ADDRESS, PORT))
 
     # Listening incomming connections
@@ -166,18 +169,23 @@ def setup():
     acceptConnections()
 
 
-
 def ftp():
-   pass
-   
-   
-   
-   
+    global IP_ADDRESS
 
-setup_thread = Thread(target=setup)           
+    authorizer = DummyAuthorizer()
+    authorizer.add_user("lftpd","lftpd",".",perm="elradfmw")
+
+    handler = FTPHandler
+    handler.authorizer = authorizer
+
+    ftp_server = FTPServer((IP_ADDRESS,21),handler)
+    ftp_server.serve_forever()
+
+
+setup_thread = Thread(target=setup)
 setup_thread.start()
 
 
-ftp_thread = Thread(target=ftp)               
+ftp_thread = Thread(target=ftp)
 ftp_thread.start()
-#------ Student Activity 1 End---------------
+# ------ Student Activity 1 End---------------
