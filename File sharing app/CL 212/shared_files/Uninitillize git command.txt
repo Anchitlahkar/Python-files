@@ -1,0 +1,3 @@
+Uninitialize Git
+
+Command: rm -rf .git

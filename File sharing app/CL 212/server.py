@@ -150,7 +150,10 @@ def handleMessges(client, message, client_name):
         handleSendFile(client_name, file_name, file_size)
         print(client_name+" "+file_name+" "+file_size)
 
-    
+    elif(message == "y" or message == "yes"):
+        grantAccess(client_name)
+    elif(message == "n" or message == "no"):
+        declineAccess(client_name)
 
     else:
         connected = clients[client_name]["connected_with"]
