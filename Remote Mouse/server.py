@@ -32,7 +32,7 @@ def acceptConnections():
 
         print(f"Connection established with {client_socket} : {addr}")
 
-        thread1 = Thread(target= recvMessage,arg=(client_socket,))
+        thread1 = Thread(target= recvMessage,args=(client_socket))
         thread1.start()
 
 
