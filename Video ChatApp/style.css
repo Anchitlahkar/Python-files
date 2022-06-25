@@ -82,11 +82,11 @@
     display: flex;
   }
 
-  .right_window {
+  .right-window {
     display: none;
   }
 
-  .left_window {
+  .left-window {
     display: flex;
   }
 }
